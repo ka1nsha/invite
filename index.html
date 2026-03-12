@@ -1251,6 +1251,169 @@
     text-transform: uppercase;
     color: var(--gold);
   }
+
+  /* ── QR & ADDRESS SECTION ── */
+  #qr-section {
+    padding: 6rem 2rem;
+    background: var(--white);
+  }
+
+  .qr-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .qr-grid { grid-template-columns: 1fr; }
+  }
+
+  .qr-card {
+    background: var(--cream);
+    border-radius: 16px;
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 1.8rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .qr-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 16px 16px 0 0;
+  }
+
+  .qr-card.visible { opacity: 1; transform: translateY(0); }
+  .qr-card:hover { box-shadow: 0 16px 50px rgba(201,168,76,0.15); transform: translateY(-3px); }
+
+  .qr-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .qr-card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    opacity: 0.35;
+    line-height: 1;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+
+  .qr-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .qr-card-date {
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.2rem;
+  }
+
+  .qr-card-body {
+    display: flex;
+    gap: 1.4rem;
+    align-items: flex-start;
+  }
+
+  .qr-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .qr-canvas {
+    width: 110px !important;
+    height: 110px !important;
+    border: 2px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 6px;
+    background: white;
+    display: block;
+  }
+
+  .qr-label {
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  .qr-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .qr-address-label {
+    font-size: 0.44rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .qr-address-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .qr-address-full {
+    font-size: 0.62rem;
+    color: var(--text);
+    opacity: 0.5;
+  }
+
+  .qr-maps-btn, .qr-ics-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    text-decoration: none;
+    border: none;
+    font-weight: 400;
+    width: fit-content;
+  }
+
+  .qr-maps-btn { background: var(--gold); color: white; }
+  .qr-maps-btn svg { width: 13px; fill: white; flex-shrink: 0; }
+  .qr-maps-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(201,168,76,0.4); }
+
+  .qr-ics-btn { background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.4); }
+  .qr-ics-btn svg { width: 13px; stroke: var(--gold); fill: none; stroke-width: 1.8; flex-shrink: 0; }
+  .qr-ics-btn:hover { background: var(--gold-pale); border-color: var(--gold); transform: translateY(-1px); }
 </style>
 </head>
 <body>
@@ -1589,6 +1752,89 @@
   </div>
 </section>
 
+<!-- QR & ADDRESSES SECTION -->
+<section id="qr-section">
+  <div class="section-label">Konum & Takvim</div>
+
+  <div class="qr-grid">
+
+    <!-- EVENT 1: Tarsus -->
+    <div class="qr-card" id="qrc1">
+      <div class="qr-card-header">
+        <div class="qr-card-num">01</div>
+        <div>
+          <div class="qr-card-title">Düğün · Tarsus</div>
+          <div class="qr-card-date">25 Nisan 2026 · Saat 19:00</div>
+        </div>
+      </div>
+
+      <div class="qr-card-body">
+        <div class="qr-block">
+          <canvas id="qr1" class="qr-canvas"></canvas>
+          <div class="qr-label">Haritada Aç</div>
+        </div>
+        <div class="qr-info">
+          <div class="qr-address-block">
+            <div class="qr-address-label">📍 Mekan</div>
+            <div class="qr-address-name">Toy Bahçesi Kır-1</div>
+            <div class="qr-address-full">Tarsus / Mersin</div>
+          </div>
+          <div class="qr-address-block">
+            <div class="qr-address-label">👨‍👩‍👧 Ailesi</div>
+            <div class="qr-address-name">Fatma &amp; Hüseyin Bozgaç</div>
+          </div>
+          <a class="qr-maps-btn" href="https://maps.google.com/?q=Toy+Bahçesi+Kır+Tarsus+Mersin" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps'te Aç
+          </a>
+          <button class="qr-ics-btn" onclick="downloadICS(1)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Takvime Ekle (.ics)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENT 2: İstanbul -->
+    <div class="qr-card delay-1" id="qrc2">
+      <div class="qr-card-header">
+        <div class="qr-card-num">02</div>
+        <div>
+          <div class="qr-card-title">Düğün · İstanbul</div>
+          <div class="qr-card-date">2 Mayıs 2026 · Saat 18:00</div>
+        </div>
+      </div>
+
+      <div class="qr-card-body">
+        <div class="qr-block">
+          <canvas id="qr2" class="qr-canvas"></canvas>
+          <div class="qr-label">Haritada Aç</div>
+        </div>
+        <div class="qr-info">
+          <div class="qr-address-block">
+            <div class="qr-address-label">📍 Mekan</div>
+            <div class="qr-address-name">Ceremony Kanlıca</div>
+            <div class="qr-address-full">Beykoz / İstanbul</div>
+          </div>
+          <div class="qr-address-block">
+            <div class="qr-address-label">👨‍👩‍👧 Ailesi</div>
+            <div class="qr-address-name">Aytül &amp; Şahin Yılmaz</div>
+          </div>
+          <a class="qr-maps-btn" href="https://maps.google.com/?q=Ceremony+Kanlıca+Beykoz+İstanbul" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps'te Aç
+          </a>
+          <button class="qr-ics-btn" onclick="downloadICS(2)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Takvime Ekle (.ics)
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-names">Lütfiye & Enes</div>
@@ -1730,10 +1976,122 @@
     });
   }, { threshold: 0.15 });
 
-  ['bp1','ev1','ev2','fam','ppcard'].forEach(id => {
+  ['bp1','ev1','ev2','fam','ppcard','qrc1','qrc2'].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
+</script>
+
+<!-- QR Code library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  /* ── QR CODE GENERATION ── */
+  const qrData = [
+    {
+      id: 'qr1',
+      url: 'https://maps.google.com/?q=Toy+Bahçesi+Kır+Tarsus+Mersin',
+      title: 'Lütfiye & Enes Düğünü - Tarsus',
+      date: '20260425T160000Z',
+      dateEnd: '20260425T210000Z',
+      location: 'Toy Bahçesi Kır-1, Tarsus, Mersin',
+      description: 'Lütfiye & Enes Düğünü · Ailesi: Fatma & Hüseyin Bozgaç'
+    },
+    {
+      id: 'qr2',
+      url: 'https://maps.google.com/?q=Ceremony+Kanlıca+Beykoz+İstanbul',
+      title: 'Lütfiye & Enes Düğünü - İstanbul',
+      date: '20260502T150000Z',
+      dateEnd: '20260502T220000Z',
+      location: 'Ceremony Kanlıca, Beykoz, İstanbul',
+      description: 'Lütfiye & Enes Düğünü · Ailesi: Aytül & Şahin Yılmaz'
+    }
+  ];
+
+  function drawQR(canvasId, url) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const size = 110;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    // Use QRCode library to generate into a temp div, then draw
+    const tmp = document.createElement('div');
+    tmp.style.cssText = 'position:absolute;left:-9999px;top:-9999px';
+    document.body.appendChild(tmp);
+
+    new QRCode(tmp, {
+      text: url,
+      width: size,
+      height: size,
+      colorDark: '#c9a84c',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    // Wait for QR image to render then draw on canvas
+    setTimeout(() => {
+      const img = tmp.querySelector('img') || tmp.querySelector('canvas');
+      if (img) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        if (img.tagName === 'CANVAS') {
+          ctx.drawImage(img, 0, 0, size, size);
+        } else {
+          const i = new Image();
+          i.onload = () => ctx.drawImage(i, 0, 0, size, size);
+          i.src = img.src;
+        }
+      }
+      document.body.removeChild(tmp);
+    }, 200);
+  }
+
+  // Generate QR codes once library loads
+  window.addEventListener('load', () => {
+    if (typeof QRCode !== 'undefined') {
+      qrData.forEach(q => drawQR(q.id, q.url));
+    }
+  });
+
+  /* ── ICS DOWNLOAD ── */
+  function downloadICS(num) {
+    const q = qrData[num - 1];
+    const uid = `lutfiye-enes-${num}@wedding2026`;
+
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Lütfiye & Enes Wedding//TR',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTART:${q.date}`,
+      `DTEND:${q.dateEnd}`,
+      `SUMMARY:${q.title}`,
+      `DESCRIPTION:${q.description}`,
+      `LOCATION:${q.location}`,
+      'STATUS:CONFIRMED',
+      'SEQUENCE:0',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT1D',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:Yarın: ${q.title}`,
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `lutfiye-enes-dugun-${num === 1 ? 'tarsus' : 'istanbul'}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  }
 </script>
 </body>
 </html>
