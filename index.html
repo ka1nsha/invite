@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lütfiye & Enes — Düğün Daveti</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --sage: #8fa89a;
+    --sage-light: #b5c9be;
+    --sage-pale: #dce9e3;
+    --cream: #fdfaf4;
+    --white: #ffffff;
+    --dark: #2c2a25;
+    --text: #3d3a32;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ══════════════════════════════════════
+     INTRO OVERLAY — Boarding Pass Style
+  ══════════════════════════════════════ */
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #16140f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 1s ease, visibility 1s ease;
+    overflow: hidden;
+    gap: 2rem;
+  }
+  #intro-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* starfield */
+  .intro-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* gold ambient glow */
+  .intro-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 65%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes glowPulse {
+    0%,100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.12); }
+  }
+
+  /* ── THE INTRO CARD STACK ── */
+  .intro-card-stack {
+    position: relative;
+    z-index: 2;
+    width: min(680px, 94vw);
+    cursor: pointer;
+  }
+
+  /* passport cover — sits behind, rotated slightly */
+  .intro-passport-cover {
+    position: absolute;
+    top: 10px; left: -18px;
+    width: 200px;
+    height: calc(100% - 10px);
+    background: linear-gradient(160deg, #6b8878 0%, #4a6459 100%);
+    border-radius: 10px;
+    box-shadow: -8px 12px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.5rem 1rem;
+    transform: rotate(-3deg) translateX(-8px);
+    transition: transform 0.9s cubic-bezier(0.34,1.2,0.64,1);
+    border: 1px solid rgba(201,168,76,0.25);
+    overflow: hidden;
+  }
+  .intro-passport-cover::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+  }
+  .intro-passport-cover .ipc-plane {
+    fill: rgba(201,168,76,0.5);
+    width: 54px;
+  }
+  .ipc-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.8);
+    text-align: center;
+  }
+  .ipc-names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    line-height: 1.2;
+  }
+  /* world map watermark on passport cover */
+  .ipc-map {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  /* ── BOARDING PASS (main) ── */
+  .intro-bp {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 4px 20px rgba(201,168,76,0.2);
+    display: flex;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.18);
+    transform: translateY(0) rotate(0deg);
+    transition: transform 0.9s cubic-bezier(0.34,1.2,0.64,1);
+    margin-left: 40px; /* offset so passport cover peeks out */
+  }
+
+  /* gold top stripe */
+  .intro-bp::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #c9a84c, #e8c97a, #c9a84c);
+    border-radius: 14px 14px 0 0;
+  }
+
+  /* vertical "LÜTFIYE & ENES · FIRST CLASS TICKET" side text */
+  .intro-bp-side {
+    width: 28px;
+    background: linear-gradient(180deg, #c9a84c 0%, #a07c32 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .intro-bp-side span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.42rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+
+  /* main body of the BP */
+  .intro-bp-body {
+    flex: 1;
+    padding: 1.4rem 1.4rem 1.2rem;
+    position: relative;
+  }
+
+  /* world map watermark */
+  .intro-bp-map {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .intro-bp-map svg { width: 95%; }
+
+  .intro-bp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+  }
+  .intro-bp-class {
+    font-size: 0.48rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .intro-bp-names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    color: #c9a84c;
+    line-height: 1;
+  }
+
+  .intro-bp-invite {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    color: #3d3a32;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0.5rem 0 0.8rem;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .intro-bp-route {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .intro-bp-city { text-align: center; }
+  .intro-bp-city-code {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: #c9a84c;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .intro-bp-city-name {
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #3d3a32;
+    opacity: 0.55;
+    margin-top: 2px;
+  }
+  .intro-bp-arrow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(201,168,76,0.35);
+  }
+  .intro-bp-arrow::before, .intro-bp-arrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+  .intro-bp-arrow svg { width: 22px; fill: #c9a84c; opacity: 0.5; flex-shrink: 0; }
+
+  .intro-bp-details {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 0.5rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    margin-top: 0.5rem;
+  }
+  .intro-bp-detail label {
+    font-size: 0.4rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .intro-bp-detail span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    color: #3d3a32;
+  }
+
+  .intro-bp-gate {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    background: #f5e9c8;
+    border-radius: 5px;
+    font-size: 0.42rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c9a84c;
+  }
+
+  /* dashed divider */
+  .intro-bp-divider {
+    width: 1px;
+    background: repeating-linear-gradient(to bottom, #e8c97a 0, #e8c97a 5px, transparent 5px, transparent 10px);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .intro-bp-divider::before, .intro-bp-divider::after {
+    content: '';
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    width: 22px; height: 11px;
+    background: #16140f;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .intro-bp-divider::before { top: -1px; border-radius: 0 0 11px 11px; }
+  .intro-bp-divider::after  { bottom: -1px; border-radius: 11px 11px 0 0; }
+
+  /* stub (right side) */
+  .intro-bp-stub {
+    width: 140px;
+    flex-shrink: 0;
+    background: linear-gradient(160deg, #dce9e3 0%, #b5c9be 100%);
+    padding: 1.2rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    position: relative;
+  }
+  .intro-bp-stub::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  .intro-stub-monogram {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2.4rem;
+    color: #8fa89a;
+    line-height: 1;
+    text-align: center;
+  }
+  .intro-stub-box {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(143,168,154,0.4);
+    border-radius: 6px;
+    padding: 0.5rem 0.6rem;
+    text-align: center;
+    width: 100%;
+  }
+  .intro-stub-box-label {
+    font-size: 0.38rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .intro-stub-box-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: #3d3a32;
+  }
+  .intro-stub-city {
+    font-size: 0.42rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8fa89a;
+    margin-top: 1px;
+  }
+  .intro-stub-love {
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8fa89a;
+    text-align: center;
+  }
+
+  /* ── barcode ── */
+  .intro-bp-barcode {
+    display: flex;
+    gap: 1.5px;
+    margin-top: 0.5rem;
+  }
+  .intro-bp-barcode span {
+    display: block;
+    background: #c9a84c;
+    border-radius: 1px;
+    height: 28px;
+  }
+
+  /* ── hint ── */
+  .intro-hint {
+    position: relative;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    animation: hintPulse 2.5s ease-in-out infinite;
+  }
+  .intro-hint-arrow {
+    width: 1px; height: 28px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+    animation: arrowDrop 2.5s ease-in-out infinite;
+  }
+  @keyframes hintPulse {
+    0%,100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+  @keyframes arrowDrop {
+    0%   { transform: scaleY(0); transform-origin: top; opacity:0; }
+    50%  { transform: scaleY(1); transform-origin: top; opacity:1; }
+    100% { transform: scaleY(1); transform-origin: top; opacity:0; }
+  }
+
+  /* confetti */
+  .confetti-piece {
+    position: absolute;
+    width: 5px; height: 5px;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  /* ── OPEN STATE ── */
+  /* passport cover flies left */
+  .intro-card-stack.opening .intro-passport-cover {
+    transform: rotate(-18deg) translateX(-140px) translateY(20px);
+  }
+  /* boarding pass lifts, scales up slightly, then fades */
+  .intro-card-stack.opening .intro-bp {
+    transform: translateY(-18px) scale(1.03);
+  }
+
+  /* main content */
+  #main-content {
+    opacity: 0;
+    transition: opacity 1s ease 0.2s;
+  }
+  #main-content.revealed { opacity: 1; }
+
+  @media (max-width: 700px) {
+    .intro-passport-cover { width: 150px; left: -12px; }
+    .intro-bp { margin-left: 28px; }
+    .intro-bp-stub { width: 110px; }
+    .intro-bp-names { font-size: 1.3rem; }
+    .intro-bp-invite { font-size: 0.7rem; }
+    .intro-bp-details { grid-template-columns: 1fr 1fr; }
+    .intro-bp-details .intro-bp-detail:last-child { grid-column: 1/-1; }
+  }
+  @media (max-width: 480px) {
+    .intro-passport-cover { display: none; }
+    .intro-bp { margin-left: 0; }
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .world-map-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .world-map-bg svg {
+    width: 90%;
+    max-width: 900px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 1.2s ease forwards 0.3s;
+  }
+
+  .hero-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before, .hero-tag::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-names {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 7.5rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-names span {
+    color: var(--dark);
+    font-style: normal;
+    font-size: 0.5em;
+    vertical-align: middle;
+    margin: 0 0.3em;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-top: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-invite-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    font-style: italic;
+    color: var(--text);
+    opacity: 0.75;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+
+  .scroll-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--gold);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    animation: bounce 2s ease infinite 2s;
+  }
+
+  .scroll-cta svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  /* FLOATING PLANE */
+  .plane-float {
+    position: absolute;
+    opacity: 0;
+    animation: planeFly 8s ease-in-out forwards 1s;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .plane-float svg {
+    width: 80px;
+    fill: var(--gold);
+    opacity: 0.3;
+  }
+
+  @keyframes planeFly {
+    0% { left: -10%; top: 60%; opacity: 0; transform: rotate(-5deg); }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.3; }
+    100% { left: 110%; top: 25%; opacity: 0; transform: rotate(-5deg); }
+  }
+
+  /* ── BOARDING PASS SECTION ── */
+  #boarding {
+    padding: 6rem 2rem;
+    background: var(--white);
+    position: relative;
+  }
+
+  .section-label {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .section-label::before, .section-label::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: var(--gold-light);
+  }
+
+  .boarding-pass {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(201,168,76,0.12), 0 4px 20px rgba(0,0,0,0.06);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(201,168,76,0.2);
+    opacity: 0;
+    transform: translateY(50px) rotate(-1deg);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .boarding-pass.visible {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  .boarding-pass:hover {
+    box-shadow: 0 30px 80px rgba(201,168,76,0.2), 0 8px 30px rgba(0,0,0,0.08);
+    transform: translateY(-4px) rotate(0deg);
+  }
+
+  .bp-main {
+    flex: 1;
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  .bp-divider {
+    width: 1px;
+    background: repeating-linear-gradient(to bottom, var(--gold-light) 0, var(--gold-light) 6px, transparent 6px, transparent 12px);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .bp-divider::before, .bp-divider::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 14px;
+    background: var(--cream);
+    border-radius: 0 0 14px 14px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-top: none;
+  }
+
+  .bp-divider::before { top: -1px; border-radius: 0 0 14px 14px; }
+  .bp-divider::after  { bottom: -1px; border-radius: 14px 14px 0 0; }
+
+  .bp-stub {
+    width: 180px;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(160deg, var(--sage-pale) 0%, var(--sage-light) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .bp-stub::after {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .bp-flight-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateX(-50%) rotate(180deg) translateY(50%);
+  }
+
+  .bp-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .bp-class {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .bp-names-script {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+
+  .bp-body {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    align-items: center;
+  }
+
+  .bp-city {
+    text-align: center;
+  }
+
+  .bp-city-code {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .bp-city-name {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.6;
+    margin-top: 0.3rem;
+  }
+
+  .bp-flight-line {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--gold-light);
+  }
+
+  .bp-flight-line svg {
+    width: 32px;
+    fill: var(--gold);
+    opacity: 0.6;
+  }
+
+  .bp-flight-line::before, .bp-flight-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-light);
+    opacity: 0.4;
+    min-width: 20px;
+  }
+
+  .bp-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .bp-detail-item label {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+  }
+
+  .bp-detail-item span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .barcode {
+    display: flex;
+    gap: 2px;
+    margin-top: 1.5rem;
+  }
+
+  .barcode span {
+    display: block;
+    height: 40px;
+    background: var(--gold);
+    opacity: 0.7;
+    border-radius: 1px;
+  }
+
+  .stub-monogram {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-style: italic;
+    color: var(--sage);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .stub-date {
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dark);
+    opacity: 0.6;
+  }
+
+  .stub-box {
+    border: 1px solid rgba(143,168,154,0.4);
+    border-radius: 8px;
+    padding: 0.8rem;
+    text-align: center;
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+  }
+
+  .stub-box-label {
+    font-size: 0.45rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .stub-box-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  /* ── EVENTS SECTION ── */
+  #events {
+    padding: 6rem 2rem;
+    background: var(--cream);
+  }
+
+  .events-grid {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .events-grid { grid-template-columns: 1fr; }
+    .boarding-pass { flex-direction: column; }
+    .bp-stub { width: 100%; padding: 1.5rem; flex-direction: row; }
+    .bp-divider { display: none; }
+  }
+
+  .event-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+  }
+
+  .event-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .event-card:hover {
+    box-shadow: 0 16px 50px rgba(201,168,76,0.15);
+    transform: translateY(-4px);
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 16px 16px 0 0;
+  }
+
+  .event-card-type {
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .event-card-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .event-card-month {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .event-card-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+    margin: 1rem 0;
+  }
+
+  .event-card-location {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .event-card-sublocation {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 0.3rem;
+  }
+
+  .event-card-time {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .event-card-time svg {
+    width: 14px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  /* ── FAMILIES SECTION ── */
+  #families {
+    padding: 5rem 2rem;
+    background: linear-gradient(160deg, var(--sage-pale) 0%, var(--white) 100%);
+    text-align: center;
+  }
+
+  .families-container {
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+
+  .families-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .families-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .families-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .family-block {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .family-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .family-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .families-heart {
+    font-size: 2rem;
+    color: var(--gold);
+  }
+
+  /* ── PASSPORT SECTION ── */
+  #passport {
+    padding: 6rem 2rem;
+    background: var(--dark);
+    color: var(--cream);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #passport::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .passport-card {
+    max-width: 500px;
+    margin: 3rem auto 0;
+    background: linear-gradient(160deg, #3a4a42 0%, #2c3830 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 3rem;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+
+  .passport-card.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .passport-emblem {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .passport-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .passport-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .passport-row {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 0.8rem 0;
+    font-size: 0.7rem;
+  }
+
+  .passport-row-label {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    font-size: 0.55rem;
+  }
+
+  .passport-row-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .passport-mrz {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    color: var(--sage-light);
+    opacity: 0.4;
+    letter-spacing: 0.15em;
+    line-height: 1.8;
+    text-align: left;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 2rem;
+    background: var(--dark);
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+
+  /* ── HEARTS ── */
+  .hearts-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .floating-heart {
+    position: absolute;
+    bottom: -30px;
+    font-size: 1rem;
+    opacity: 0;
+    animation: heartFloat linear infinite;
+    color: var(--gold);
+  }
+
+  @keyframes heartFloat {
+    0% { transform: translateY(0) scale(0.5); opacity: 0.4; }
+    100% { transform: translateY(-110vh) scale(1.2) rotate(20deg); opacity: 0; }
+  }
+
+  /* Gate / details strip */
+  .bp-gate-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--gold-pale);
+    border-radius: 6px;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO OVERLAY -->
+<div id="intro-overlay">
+  <canvas class="intro-stars" id="starsCanvas"></canvas>
+  <div class="intro-glow"></div>
+
+  <div class="intro-card-stack" id="introStack">
+
+    <!-- Passport cover peeking behind -->
+    <div class="intro-passport-cover">
+      <svg class="ipc-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <path fill="white" d="M120,180 Q140,160 160,170 Q180,155 200,165 Q220,150 240,160 L250,200 Q230,210 210,205 Q190,215 170,210 Q150,220 130,210 Z"/>
+        <path fill="white" d="M260,140 Q300,120 350,130 Q400,115 450,125 Q480,118 510,128 L520,180 Q490,195 460,185 Q430,198 400,190 Q360,200 320,192 Q285,200 265,188 Z"/>
+        <path fill="white" d="M530,120 Q580,105 630,115 Q680,100 730,112 L740,165 Q695,178 650,170 Q605,182 560,174 Q535,180 528,168 Z"/>
+        <path fill="white" d="M200,220 Q240,210 280,218 Q310,208 340,215 L345,270 Q315,280 285,272 Q255,282 220,274 Q205,278 198,268 Z"/>
+        <path fill="white" d="M350,215 Q400,200 450,210 Q490,198 530,208 L535,265 Q495,275 455,268 Q415,278 378,270 Q358,275 348,263 Z"/>
+        <path fill="white" d="M600,200 Q650,188 700,196 Q730,188 760,195 L765,250 Q735,260 705,253 Q665,263 628,255 Q605,262 598,250 Z"/>
+        <path fill="white" d="M750,180 Q800,168 850,176 Q880,168 910,175 L915,228 Q885,238 855,230 Q815,242 775,234 Q752,240 745,228 Z"/>
+      </svg>
+      <svg class="ipc-plane" viewBox="0 0 100 100"><path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/></svg>
+      <div class="ipc-title">Wedding</div>
+      <div class="ipc-names">Lütfiye<br>&amp; Enes</div>
+      <div class="ipc-title" style="margin-top:0.3rem">Passport</div>
+    </div>
+
+    <!-- Boarding Pass -->
+    <div class="intro-bp">
+      <!-- gold side bar -->
+      <div class="intro-bp-side">
+        <span>Lütfiye &amp; Enes · First Class Ticket</span>
+      </div>
+
+      <!-- main body -->
+      <div class="intro-bp-body">
+        <!-- world map watermark -->
+        <div class="intro-bp-map">
+          <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#c9a84c" d="M120,180 Q140,160 160,170 Q180,155 200,165 Q220,150 240,160 L250,200 Q230,210 210,205 Q190,215 170,210 Q150,220 130,210 Z"/>
+            <path fill="#c9a84c" d="M260,140 Q300,120 350,130 Q400,115 450,125 Q480,118 510,128 L520,180 Q490,195 460,185 Q430,198 400,190 Q360,200 320,192 Q285,200 265,188 Z"/>
+            <path fill="#c9a84c" d="M530,120 Q580,105 630,115 Q680,100 730,112 L740,165 Q695,178 650,170 Q605,182 560,174 Q535,180 528,168 Z"/>
+            <path fill="#c9a84c" d="M350,215 Q400,200 450,210 Q490,198 530,208 L535,265 Q495,275 455,268 Q415,278 378,270 Q358,275 348,263 Z"/>
+            <path fill="#c9a84c" d="M600,200 Q650,188 700,196 Q730,188 760,195 L765,250 Q735,260 705,253 Q665,263 628,255 Q605,262 598,250 Z"/>
+          </svg>
+        </div>
+
+        <div class="intro-bp-top">
+          <div>
+            <div class="intro-bp-class">First Class · Love Flight</div>
+            <div class="intro-bp-names">Lütfiye &amp; Enes</div>
+          </div>
+          <svg style="width:28px;fill:#c9a84c;opacity:0.45;flex-shrink:0" viewBox="0 0 100 100"><path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/></svg>
+        </div>
+
+        <div class="intro-bp-invite">
+          Düğünümüze Davetlisiniz<br>
+          <span style="font-size:0.7rem">Bu mutlu günümüzde sizleri de aramızda görmekten mutluluk duyarız</span>
+        </div>
+
+        <div class="intro-bp-route">
+          <div class="intro-bp-city">
+            <div class="intro-bp-city-code">MRSİN</div>
+            <div class="intro-bp-city-name">Tarsus</div>
+          </div>
+          <div class="intro-bp-arrow">
+            <svg viewBox="0 0 100 100"><path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/></svg>
+          </div>
+          <div class="intro-bp-city">
+            <div class="intro-bp-city-code">İSTNBL</div>
+            <div class="intro-bp-city-name">İstanbul</div>
+          </div>
+        </div>
+
+        <div class="intro-bp-details">
+          <div class="intro-bp-detail">
+            <label>Ailesi</label>
+            <span>Fatma &amp; Hüseyin Bozgaç</span>
+          </div>
+          <div class="intro-bp-detail">
+            <label>Tarih 1</label>
+            <span>25 Nisan 2026 · 19:00</span>
+          </div>
+          <div class="intro-bp-detail">
+            <label>Tarih 2</label>
+            <span>2 Mayıs 2026 · 18:00</span>
+          </div>
+        </div>
+
+        <div class="intro-bp-gate">
+          <span>Gate: 25 ♥ 02</span>
+          <span>Love Flight ✈</span>
+          <span>LE — 2504-0205</span>
+        </div>
+
+        <div class="intro-bp-barcode" id="intro-barcode"></div>
+      </div>
+
+      <!-- dashed divider -->
+      <div class="intro-bp-divider"></div>
+
+      <!-- stub -->
+      <div class="intro-bp-stub">
+        <div class="intro-stub-monogram">L&amp;E</div>
+        <div class="intro-stub-box">
+          <span class="intro-stub-box-label">Düğün</span>
+          <div class="intro-stub-box-val">25.04.2026</div>
+          <div class="intro-stub-city">Tarsus</div>
+        </div>
+        <div class="intro-stub-box">
+          <span class="intro-stub-box-label">Düğün</span>
+          <div class="intro-stub-box-val">02.05.2026</div>
+          <div class="intro-stub-city">İstanbul</div>
+        </div>
+        <div class="intro-stub-love">With Love ♥</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-hint" id="introHint">
+    <span>Daveti açmak için tıklayın</span>
+    <div class="intro-hint-arrow"></div>
+  </div>
+</div>
+
+<div id="main-content">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="world-map-bg">
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#c9a84c" d="M120,180 Q140,160 160,170 Q180,155 200,165 Q220,150 240,160 L250,200 Q230,210 210,205 Q190,215 170,210 Q150,220 130,210 Z"/>
+      <path fill="#c9a84c" d="M260,140 Q300,120 350,130 Q400,115 450,125 Q480,118 510,128 L520,180 Q490,195 460,185 Q430,198 400,190 Q360,200 320,192 Q285,200 265,188 Z"/>
+      <path fill="#c9a84c" d="M530,120 Q580,105 630,115 Q680,100 730,112 L740,165 Q695,178 650,170 Q605,182 560,174 Q535,180 528,168 Z"/>
+      <path fill="#c9a84c" d="M200,220 Q240,210 280,218 Q310,208 340,215 L345,270 Q315,280 285,272 Q255,282 220,274 Q205,278 198,268 Z"/>
+      <path fill="#c9a84c" d="M350,215 Q400,200 450,210 Q490,198 530,208 L535,265 Q495,275 455,268 Q415,278 378,270 Q358,275 348,263 Z"/>
+      <path fill="#c9a84c" d="M600,200 Q650,188 700,196 Q730,188 760,195 L765,250 Q735,260 705,253 Q665,263 628,255 Q605,262 598,250 Z"/>
+      <path fill="#c9a84c" d="M750,180 Q800,168 850,176 Q880,168 910,175 L915,228 Q885,238 855,230 Q815,242 775,234 Q752,240 745,228 Z"/>
+      <path fill="#c9a84c" d="M160,290 Q200,278 240,285 Q270,275 300,282 L305,335 Q278,344 248,337 Q215,347 180,340 Q162,344 158,332 Z"/>
+      <path fill="#c9a84c" d="M580,300 Q620,288 660,296 Q700,285 740,293 L748,348 Q708,360 665,352 Q625,362 588,354 Q572,360 575,348 Z"/>
+    </svg>
+  </div>
+
+  <div class="plane-float" id="plane">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/>
+      <path d="M20,58 L50,52 L80,58"/>
+    </svg>
+  </div>
+
+  <div class="hearts-container" id="hearts"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">First Class Ticket · Wedding</div>
+    <div class="hero-names">
+      Lütfiye <span>&</span> Enes
+    </div>
+    <div class="hero-subtitle">Düğünümüze Davetlisiniz</div>
+    <div class="hero-invite-text">
+      Bu mutlu günümüzde sizleri de aramızda<br>görmekten mutluluk duyarız
+    </div>
+    <div class="scroll-cta">
+      <span>Boarding Pass</span>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- BOARDING PASS -->
+<section id="boarding">
+  <div class="section-label">Boarding Pass</div>
+
+  <div class="boarding-pass" id="bp1">
+    <div class="bp-main">
+      <div class="bp-header">
+        <div>
+          <div class="bp-class">First Class · Love Flight</div>
+          <div class="bp-names-script">Lütfiye & Enes</div>
+        </div>
+        <svg style="width:32px;fill:var(--gold);opacity:0.5" viewBox="0 0 100 100"><path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/></svg>
+      </div>
+
+      <div class="bp-body">
+        <div class="bp-city">
+          <div class="bp-city-code">MRSİN</div>
+          <div class="bp-city-name">Tarsus</div>
+        </div>
+        <div class="bp-flight-line">
+          <svg viewBox="0 0 100 100"><path d="M10,50 L50,20 L90,50 L65,50 L60,75 L50,70 L40,75 L35,50 Z"/></svg>
+        </div>
+        <div class="bp-city">
+          <div class="bp-city-code">İSTNBL</div>
+          <div class="bp-city-name">Istanbul</div>
+        </div>
+      </div>
+
+      <div class="bp-details">
+        <div class="bp-detail-item">
+          <label>Tarih</label>
+          <span>25 Nisan 2026</span>
+        </div>
+        <div class="bp-detail-item">
+          <label>Saat</label>
+          <span>19:00</span>
+        </div>
+        <div class="bp-detail-item">
+          <label>Mekan</label>
+          <span>Toy Bahçesi Kır-1</span>
+        </div>
+      </div>
+
+      <div class="bp-gate-strip">
+        <span>Gate: 25 ♥ 02</span>
+        <span>LOVE FLIGHT ✈</span>
+        <span>LE — 2504-0205</span>
+      </div>
+
+      <div class="barcode" id="barcode"></div>
+    </div>
+
+    <div class="bp-divider"></div>
+
+    <div class="bp-stub">
+      <div class="stub-monogram">L&E</div>
+      <div class="stub-box">
+        <span class="stub-box-label">Düğün</span>
+        <div class="stub-box-val">25.04.2026</div>
+        <div style="font-size:0.6rem;color:var(--sage);margin-top:0.2rem;letter-spacing:0.1em">TARSUS</div>
+      </div>
+      <div class="stub-box">
+        <span class="stub-box-label">Düğün</span>
+        <div class="stub-box-val">02.05.2026</div>
+        <div style="font-size:0.6rem;color:var(--sage);margin-top:0.2rem;letter-spacing:0.1em">İSTANBUL</div>
+      </div>
+      <div class="stub-date">With Love ♥</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-label">Etkinlikler</div>
+
+  <div class="events-grid">
+    <div class="event-card" id="ev1">
+      <div class="event-card-type">✈ Düğün · Tarsus / Mersin</div>
+      <div class="event-card-date">25</div>
+      <div class="event-card-month">Nisan 2026</div>
+      <div class="event-card-divider"></div>
+      <div class="event-card-location">Toy Bahçesi Kır-1<br><span style="font-size:0.85rem;opacity:0.7">Tarsus / Mersin</span></div>
+      <div class="event-card-sublocation">Ailesi: Fatma & Hüseyin Bozgaç</div>
+      <div class="event-card-time">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Saat 19:00
+      </div>
+    </div>
+
+    <div class="event-card delay-1" id="ev2">
+      <div class="event-card-type">✈ Düğün · Beykoz / İstanbul</div>
+      <div class="event-card-date">02</div>
+      <div class="event-card-month">Mayıs 2026</div>
+      <div class="event-card-divider"></div>
+      <div class="event-card-location">Ceremony Kanlıca<br><span style="font-size:0.85rem;opacity:0.7">Beykoz / İstanbul</span></div>
+      <div class="event-card-sublocation">Ailesi: Aytül & Şahin Yılmaz</div>
+      <div class="event-card-time">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Saat 18:00
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAMILIES -->
+<section id="families">
+  <div class="section-label">Aileler</div>
+  <div class="families-container" id="fam">
+    <div class="families-title">İki Ailenin Mutlu Birleşimi</div>
+    <div class="families-grid">
+      <div class="family-block">
+        <div class="family-label">Lütfiye'nin Ailesi</div>
+        <div class="family-name">Fatma & Hüseyin<br>Bozgaç</div>
+      </div>
+      <div class="families-heart">♥</div>
+      <div class="family-block">
+        <div class="family-label">Enes'in Ailesi</div>
+        <div class="family-name">Aytül & Şahin<br>Yılmaz</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PASSPORT INNER PAGE -->
+<section id="passport">
+  <div class="section-label" style="color:var(--gold-light)">Wedding Passport</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.5rem);font-style:italic;color:var(--gold);font-weight:400">Our Wedding Ticket</h2>
+
+  <div class="passport-card" id="ppcard">
+    <div class="passport-emblem">♥</div>
+    <div class="passport-title">Passport to Wedding</div>
+    <div class="passport-subtitle">Lütfiye & Enes</div>
+
+    <div class="passport-row">
+      <span class="passport-row-label">Type</span>
+      <span class="passport-row-val">Wedding</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Code</span>
+      <span class="passport-row-val">LE</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Passport No</span>
+      <span class="passport-row-val">2504-0205</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Names</span>
+      <span class="passport-row-val">Lütfiye & Enes</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Date</span>
+      <span class="passport-row-val">25 Nisan / 2 Mayıs 2026</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Check-in</span>
+      <span class="passport-row-val">19:00 / 18:00</span>
+    </div>
+    <div class="passport-row">
+      <span class="passport-row-label">Location</span>
+      <span class="passport-row-val">Mersin & İstanbul</span>
+    </div>
+
+    <div class="passport-mrz">
+      PWTURLUTFIYEYILMAZ&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+      2504025LE&lt;2026LE&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;LOVE&lt;
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-names">Lütfiye & Enes</div>
+  <div class="footer-text">25 Nisan · 2 Mayıs 2026 · With Love ♥</div>
+</footer>
+
+</div><!-- /main-content -->
+
+<script>
+  /* ── INTRO: Stars canvas ── */
+  (function() {
+    const canvas = document.getElementById('starsCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    for (let i = 0; i < 180; i++) stars.push({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.1 + 0.2,
+      speed: Math.random() * 0.006 + 0.002,
+      phase: Math.random() * Math.PI * 2
+    });
+    let raf;
+    function draw(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        const a = 0.15 + 0.65 * Math.abs(Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(201,168,76,${a})`;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+    draw(0);
+    window._stopStars = () => cancelAnimationFrame(raf);
+  })();
+
+  /* ── Mini barcode ── */
+  const ibc = document.getElementById('intro-barcode');
+  for (let i = 0; i < 55; i++) {
+    const b = document.createElement('span');
+    b.style.width = (Math.random() < 0.28 ? 3 : Math.random() < 0.5 ? 2 : 1) + 'px';
+    b.style.opacity = (0.35 + Math.random() * 0.55).toFixed(2);
+    ibc.appendChild(b);
+  }
+
+  /* ── Confetti burst ── */
+  function burst(cx, cy) {
+    const colors = ['#c9a84c','#e8c97a','#8fa89a','#f5e9c8','#b5c9be','#ffffff'];
+    for (let i = 0; i < 36; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = `left:${cx}px;top:${cy}px;position:absolute;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${colors[i%colors.length]};border-radius:${Math.random()<0.4?'0':'50%'};pointer-events:none;z-index:10001`;
+      const angle = (i / 36) * 360 + Math.random()*20;
+      const dist  = 80 + Math.random() * 160;
+      const dx = Math.cos(angle * Math.PI/180) * dist;
+      const dy = Math.sin(angle * Math.PI/180) * dist - 60;
+      overlay.appendChild(p);
+      requestAnimationFrame(() => {
+        p.style.transition = `transform ${0.7+Math.random()*0.5}s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.9s ease 0.25s`;
+        p.style.transform = `translate(${dx}px,${dy}px) rotate(${Math.random()*720}deg)`;
+        p.style.opacity = '0';
+      });
+      setTimeout(() => p.remove(), 1600);
+    }
+  }
+
+  /* ── Open sequence ── */
+  let opened = false;
+  const overlay    = document.getElementById('intro-overlay');
+  const stack      = document.getElementById('introStack');
+  const hint       = document.getElementById('introHint');
+  const mainContent = document.getElementById('main-content');
+
+  function openInvite(e) {
+    if (opened) return;
+    opened = true;
+
+    hint.style.opacity = '0';
+    hint.style.transition = 'opacity 0.3s ease';
+
+    const rect = stack.getBoundingClientRect();
+    burst(rect.left + rect.width * 0.6, rect.top + rect.height * 0.4);
+
+    stack.classList.add('opening');
+
+    /* After lift, scale card to fill screen then fade overlay */
+    setTimeout(() => {
+      stack.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.6s ease';
+      stack.style.transform  = 'scale(0.85) translateY(30px)';
+      stack.style.opacity    = '0';
+    }, 800);
+
+    setTimeout(() => {
+      overlay.classList.add('hide');
+      mainContent.classList.add('revealed');
+      window._stopStars && window._stopStars();
+      document.body.style.overflow = '';
+    }, 1500);
+  }
+
+  overlay.addEventListener('click', openInvite);
+  overlay.addEventListener('touchend', openInvite);
+  document.body.style.overflow = 'hidden';
+
+  /* ── Main site barcode ── */
+  const bc = document.getElementById('barcode');
+  for (let i = 0; i < 60; i++) {
+    const b = document.createElement('span');
+    const w = Math.random() < 0.3 ? 3 : Math.random() < 0.5 ? 2 : 1;
+    b.style.width = w + 'px';
+    b.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+    bc.appendChild(b);
+  }
+
+  // ── Floating hearts
+  const hc = document.getElementById('hearts');
+  function spawnHeart() {
+    const h = document.createElement('div');
+    h.className = 'floating-heart';
+    h.textContent = Math.random() < 0.5 ? '♥' : '✈';
+    h.style.left = Math.random() * 100 + '%';
+    h.style.fontSize = (0.6 + Math.random() * 1) + 'rem';
+    const dur = 6 + Math.random() * 8;
+    h.style.animation = `heartFloat ${dur}s linear forwards`;
+    h.style.animationDelay = (Math.random() * 2) + 's';
+    hc.appendChild(h);
+    setTimeout(() => h.remove(), (dur + 2) * 1000);
+  }
+  setInterval(spawnHeart, 1800);
+
+  // ── Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  ['bp1','ev1','ev2','fam','ppcard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
+</body>
+</html>
