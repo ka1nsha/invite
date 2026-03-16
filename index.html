@@ -29,6 +29,8 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   /* ══════════════════════════════════════
@@ -456,20 +458,6 @@
     transition: opacity 1s ease 0.2s;
   }
   #main-content.revealed { opacity: 1; }
-
-  @media (max-width: 700px) {
-    .intro-passport-cover { width: 150px; left: -12px; }
-    .intro-bp { margin-left: 28px; }
-    .intro-bp-stub { width: 110px; }
-    .intro-bp-names { font-size: 1.3rem; }
-    .intro-bp-invite { font-size: 0.7rem; }
-    .intro-bp-details { grid-template-columns: 1fr 1fr; }
-    .intro-bp-details .intro-bp-detail:last-child { grid-column: 1/-1; }
-  }
-  @media (max-width: 480px) {
-    .intro-passport-cover { display: none; }
-    .intro-bp { margin-left: 0; }
-  }
 
   /* ── NOISE TEXTURE OVERLAY ── */
   body::before {
@@ -908,12 +896,235 @@
     gap: 2rem;
   }
 
-  @media (max-width: 640px) {
-    .events-grid { grid-template-columns: 1fr; }
-    .boarding-pass { flex-direction: column; }
-    .bp-stub { width: 100%; padding: 1.5rem; flex-direction: row; }
-    .bp-divider { display: none; }
+  /* ════════════════════════════
+     RESPONSIVE — Tablet 900px
+  ════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Intro */
+    .intro-passport-cover { width: 150px; left: -12px; }
+    .intro-bp { margin-left: 28px; }
+    .intro-bp-stub { width: 115px; padding: 1rem 0.75rem; }
+    .intro-stub-monogram { font-size: 2rem; }
+    .intro-bp-names { font-size: 1.45rem; }
+    .intro-bp-details { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .intro-bp-details .intro-bp-detail:last-child { grid-column: 1 / -1; }
+    .intro-bp-gate { font-size: 0.4rem; }
+
+    /* Boarding pass */
+    .bp-main { padding: 2rem 1.8rem; }
+    .bp-stub { width: 155px; }
+
+    /* Grids */
+    .events-grid { gap: 1.4rem; }
+    .qr-grid { gap: 1.4rem; }
+    .families-grid { gap: 1.2rem; }
   }
+
+  /* ════════════════════════════
+     RESPONSIVE — Mobile 640px
+  ════════════════════════════ */
+  @media (max-width: 640px) {
+
+    /* ── Intro overlay ── */
+    #intro-overlay { gap: 1rem; padding: 0.8rem; }
+    .intro-card-stack { width: calc(100vw - 1.6rem); }
+
+    /* Hide passport cover on small screens, use full-width BP */
+    .intro-passport-cover { display: none; }
+    .intro-bp {
+      margin-left: 0;
+      flex-direction: column;
+      border-radius: 12px;
+    }
+    .intro-bp-side {
+      width: 100%;
+      height: 26px;
+      writing-mode: horizontal-tb;
+    }
+    .intro-bp-side span {
+      writing-mode: horizontal-tb;
+      transform: none;
+      font-size: 0.4rem;
+      letter-spacing: 0.2em;
+    }
+    .intro-bp-body { padding: 1rem 1rem 0.8rem; }
+    .intro-bp-top { margin-bottom: 0.5rem; }
+    .intro-bp-names { font-size: 1.4rem; }
+    .intro-bp-class { font-size: 0.44rem; }
+    .intro-bp-invite { font-size: 0.68rem; margin: 0.3rem 0 0.5rem; }
+    .intro-bp-route { margin: 0.4rem 0; gap: 0.4rem; }
+    .intro-bp-city-code { font-size: 1.25rem; }
+    .intro-bp-city-name { font-size: 0.38rem; }
+    .intro-bp-arrow svg { width: 18px; }
+    .intro-bp-details {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding-top: 0.6rem;
+      margin-top: 0.4rem;
+    }
+    .intro-bp-details .intro-bp-detail:last-child { grid-column: 1 / -1; }
+    .intro-bp-detail label { font-size: 0.38rem; }
+    .intro-bp-detail span { font-size: 0.72rem; }
+    .intro-bp-gate {
+      font-size: 0.36rem;
+      padding: 0.3rem 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      justify-content: center;
+    }
+    .intro-bp-barcode { display: none; }
+    /* Stub becomes a horizontal strip at bottom */
+    .intro-bp-divider { display: none; }
+    .intro-bp-stub {
+      width: 100%;
+      flex-direction: row;
+      padding: 0.8rem 1rem;
+      gap: 0.6rem;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .intro-bp-stub::after { display: none; }
+    .intro-stub-monogram { font-size: 1.6rem; }
+    .intro-stub-box { padding: 0.4rem 0.5rem; flex: 1; min-width: 80px; }
+    .intro-stub-box-val { font-size: 0.78rem; }
+    .intro-stub-city { font-size: 0.38rem; }
+    .intro-stub-love { font-size: 0.38rem; }
+    .intro-hint { font-size: 0.42rem; letter-spacing: 0.25em; gap: 4px; }
+    .intro-hint-arrow { height: 20px; }
+
+    /* ── Hero ── */
+    #hero { min-height: 100svh; }
+    .hero-content { padding: 1.2rem 1rem; }
+    .hero-tag { font-size: 0.55rem; gap: 0.6rem; margin-bottom: 1rem; }
+    .hero-tag::before, .hero-tag::after { width: 24px; }
+    .hero-subtitle { letter-spacing: 0.12em; margin-top: 0.8rem; margin-bottom: 1.8rem; }
+    .hero-invite-text { font-size: 0.95rem; margin-bottom: 1.8rem; padding: 0 0.5rem; }
+    .scroll-cta { font-size: 0.52rem; letter-spacing: 0.2em; }
+
+    /* ── Section labels ── */
+    .section-label { font-size: 0.5rem; gap: 0.7rem; margin-bottom: 1.8rem; }
+    .section-label::before, .section-label::after { width: 24px; }
+
+    /* ── Boarding pass section ── */
+    #boarding { padding: 3.5rem 1rem; }
+    .boarding-pass {
+      flex-direction: column;
+      border-radius: 12px;
+      transform: translateY(50px); /* reset initial */
+    }
+    .bp-main { padding: 1.4rem 1.2rem; }
+    .bp-header { margin-bottom: 1rem; }
+    .bp-names-script { font-size: 1.55rem; }
+    .bp-class { font-size: 0.48rem; }
+    .bp-body { gap: 0.8rem; margin: 1rem 0; }
+    .bp-city-code { font-size: 1.7rem; }
+    .bp-city-name { font-size: 0.48rem; }
+    .bp-flight-line svg { width: 24px; }
+    .bp-details {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      padding-top: 1rem;
+    }
+    .bp-detail-item label { font-size: 0.44rem; }
+    .bp-detail-item span { font-size: 0.85rem; }
+    .bp-gate-strip {
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      font-size: 0.4rem;
+      justify-content: center;
+      text-align: center;
+    }
+    .barcode { display: none; }
+    .bp-divider { display: none; }
+    .bp-stub {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      gap: 0.6rem;
+      height: auto;
+    }
+    .bp-stub::after { display: none; }
+    .stub-monogram { font-size: 2rem; }
+    .stub-box { padding: 0.5rem; flex: 1; min-width: 80px; }
+    .stub-box-val { font-size: 0.95rem; }
+    .stub-date { font-size: 0.5rem; }
+
+    /* ── Events ── */
+    #events { padding: 3.5rem 1rem; }
+    .events-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .event-card { padding: 1.4rem 1.2rem; }
+    .event-card-date { font-size: 2.8rem; }
+    .event-card-type { font-size: 0.48rem; margin-bottom: 0.6rem; }
+    .event-card-sublocation { font-size: 0.58rem; }
+
+    /* ── Families ── */
+    #families { padding: 3.5rem 1rem; }
+    .families-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .families-heart { display: none; }
+    .family-block { padding: 1.2rem; text-align: center; }
+    .families-title { margin-bottom: 1.5rem; }
+
+    /* ── Passport ── */
+    #passport { padding: 3.5rem 1rem; }
+    .passport-card { padding: 1.8rem 1.2rem; margin-top: 1.5rem; }
+    .passport-subtitle { font-size: 1.6rem; margin-bottom: 1.4rem; }
+    .passport-row { padding: 0.65rem 0; }
+    .passport-row-val { font-size: 0.88rem; text-align: right; max-width: 60%; }
+    .passport-mrz {
+      font-size: 0.44rem;
+      letter-spacing: 0.06em;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    /* ── QR Section ── */
+    #qr-section { padding: 3.5rem 1rem; }
+    .qr-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .qr-card { padding: 1.4rem 1.2rem; }
+    .qr-card-header { gap: 0.8rem; margin-bottom: 1rem; padding-bottom: 0.8rem; }
+    .qr-card-num { font-size: 1.8rem; }
+    .qr-card-title { font-size: 1.05rem; }
+    .qr-card-body {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .qr-block { flex-shrink: 0; }
+    .qr-canvas { width: 95px !important; height: 95px !important; }
+    .qr-info { flex: 1; gap: 0.6rem; }
+    .qr-maps-btn, .qr-ics-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.5rem;
+    }
+
+    /* ── Footer ── */
+    footer { padding: 2rem 1rem; }
+    .footer-names { font-size: 1.5rem; }
+  }
+
+  /* ════════════════════════════
+     RESPONSIVE — Small 380px
+  ════════════════════════════ */
+  @media (max-width: 380px) {
+    .intro-bp-names { font-size: 1.2rem; }
+    .intro-bp-invite { display: none; }
+    .intro-stub-box { min-width: 70px; }
+    .hero-names { letter-spacing: -0.03em; }
+    .bp-stub { flex-direction: column; align-items: center; }
+    .stub-box { width: 100%; min-width: unset; }
+    .qr-card-body { flex-direction: column; align-items: center; }
+    .qr-block { flex-direction: row; gap: 1rem; width: 100%; }
+    .qr-canvas { width: 85px !important; height: 85px !important; }
+  }
+
 
   .event-card {
     background: var(--white);
@@ -1264,10 +1475,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-  }
-
-  @media (max-width: 700px) {
-    .qr-grid { grid-template-columns: 1fr; }
   }
 
   .qr-card {
